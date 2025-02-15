@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MADE BY @Hackerking995</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white">
+
+  <!-- Main Title -->
+  <header class="text-center py-6">
+    <h1 class="text-3xl font-bold text-blue-500 neon-text">MADE BY @Hackerking995</h1>
+  </header>
+
+  <!-- First Container -->
+  <div class="max-w-md mx-auto bg-gray-800 rounded-lg shadow-lg border border-red-500 p-6 my-6">
+    <h2 class="text-xl font-bold text-red-500 text-center mb-4">AI ONLINE SERVER</h2>
+    
+    <!-- Period and Timer -->
+    <div class="border border-red-500 p-4 rounded-lg mb-4">
+      <p class="text-red-500 font-bold">AUTO PERIOD NUMBER</p>
+      <p id="period-number" class="text-white text-lg">Loading...</p>
+    </div>
+
+    <div class="border border-red-500 p-4 rounded-lg mb-4">
+      <p class="text-red-500 font-bold">AUTO TIMER</p>
+      <p id="auto-timer" class="text-white text-lg">00:00</p>
+    </div>
+
+    <!-- AI Server Results -->
+    <div class="border border-red-500 p-4 rounded-lg mb-4">
+      <p class="text-red-500 font-bold">AI SERVER RESULTS</p>
+      <p id="ai-results" class="text-white text-lg">Waiting...</p>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-between">
+      <button 
+        id="result-button" 
+        class="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-600 transition"
+        onclick="displayResult()">
+        RESULT
+      </button>
+      <button 
+        class="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-600 transition"
+        onclick="window.open('https://t.me/hackersdx/', '_blank')">
+        JOIN TG
+      </button>
+    </div>
+  </div>
+
+  <!-- Second Container -->
+  <div class="max-w-lg mx-auto bg-gray-800 rounded-lg shadow-lg border border-red-500 p-6 my-6">
+    <h2 class="text-xl font-bold text-red-500 text-center mb-4">HISTORY OF RESULTS</h2>
+    <ul id="result-history" class="space-y-2">
+      <!-- History items will be added dynamically -->
+    </ul>
+  </div>
+
+  <script>
+    // Timer and Period Logic
+    let periodNumber = 1;
+    let timer = 60;
+
+    const updatePeriodAndTimer = () => {
+      document.getElementById('period-number').textContent = `Period: ${periodNumber}`;
+      const minutes = Math.floor(timer / 60);
+      const seconds = timer % 60;
+      document.getElementById('auto-timer').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+      timer--;
+      if (timer < 0) {
+        timer = 60;
+        periodNumber++;
+      }
+    };
+
+    setInterval(updatePeriodAndTimer, 1000);
+
+    // Simulate Result Display
+    const displayResult = () => {
+      document.getElementById('ai-results').textContent = 'Waiting...';
+      setTimeout(() => {
+        const result = Math.random() > 0.5 ? 'BIG' : 'SMALL';
+        document.getElementById('ai-results').textContent = result;
+
+        // Add to history
+        const historyItem = document.createElement('li');
+        historyItem.textContent = `Period ${periodNumber - 1}: ${result}`;
+        historyItem.classList.add('text-lg', 'text-white', 'border-b', 'border-gray-700', 'pb-2');
+        document.getElementById('result-history').prepend(historyItem);
+      }, 1000);
+    };
+  </script>
+
+</body>
+</html>
