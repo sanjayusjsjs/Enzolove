@@ -1,98 +1,395 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MADE BY @Hackerking995</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-900 text-white">
+<!DOCTYPE html>  <html lang="en">    <head>        <meta charset="UTF-8" />      
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />      
+  <title>Prediction Dashboard</title>      
+  <style>      
+    /* Make all text bold */      
+    body {      
+      font-family: Arial, sans-serif;      
+      font-weight: bold;      
+      margin: 0;      
+      padding: 0;      
+      background-color: #f4f4f4;      
+      color: #333;      
+    }      
+    /* Full-screen particles container behind content */      
+    #particles-js {      
+      position: fixed;      
+      width: 100%;      
+      height: 100%;      
+      top: 0;      
+      left: 0;      
+      z-index: -1;      
+      background: #000; /* dark background for contrast */      
+    }      
+    h1 {      
+      text-align: center;      
+      color: neonblue;      
+      font-size: 2rem;      
+      text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #00f, 0 0 40px #00f;      
+    }      
+    .container {      
+      max-width: 800px;      
+      margin: 20px auto;      
+      padding: 20px;      
+      background: #fff;      
+      border-radius: 10px;      
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);      
+      position: relative;      
+      z-index: 1;      
+    }      
+    table {      
+      width: 100%;      
+      border-collapse: collapse;      
+      margin-bottom: 20px;      
+    }      
+    table th,      
+    table td {      
+      padding: 10px;      
+      border: 1px solid #ddd;      
+      text-align: left;      
+    }      
+    table th {      
+      background: #f8f8f8;      
+    }      
+    .timer {      
+      text-align: center;      
+      font-size: 1.2rem;      
+      margin-bottom: 20px;      
+    }      
+    .pagination {      
+      text-align: center;      
+      margin-top: 20px;      
+    }      
+    .pagination button {      
+      padding: 10px 20px;      
+      margin: 5px;      
+      border: none;      
+      border-radius: 5px;      
+      background: #007bff;      
+      color: white;      
+      cursor: pointer;      
+    }      
+    .pagination button:disabled {      
+      background: #ccc;      
+      cursor: not-allowed;      
+    }      
+    .prediction {      
+      text-align: center;      
+      margin-bottom: 20px;      
+    }      
+    .prediction span {      
+      display: block;      
+      font-size: 1.2rem;      
+      margin: 10px 0;      
+    }      
+  </style>      
+</head>      
+<body>      
+  <!-- Particle background container -->      
+  <div id="particles-js"></div>    <h1>MADE BY @Hackerking995</h1>      
+  <div class="container">      
+    <div class="timer" id="timeRemaining">Time Remaining: 00:00:00</div>  <div class="prediction">      
+  <!-- Only the category (Big/Small) will now be displayed -->      
+  <span id="predictedCategory"></span>      
+  <span id="predictedPremium"></span>      
+</div>    <!-- Latest Data table has been removed -->    <h3>Prediction History</h3>      
+<table id="predictionHistoryTable">      
+  <thead>      
+    <tr>      
+      <th>Issue Number</th>      
+      <th>Predicted</th>      
+      <th>Result</th>      
+    </tr>      
+  </thead>      
+  <tbody>      
+    <!-- Prediction history data will populate here -->      
+  </tbody>      
+</table>    <div class="pagination">      
+  <button id="prevPage" disabled>Previous</button>      
+  <button id="nextPage" disabled>Next</button>      
+</div>    </div>    <!-- Include particles.js library -->    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>    <!-- Initialize particles.js with red and blue particles -->    <script>      
+    particlesJS("particles-js", {      
+      "particles": {      
+        "number": {      
+          "value": 80,      
+          "density": {      
+            "enable": true,      
+            "value_area": 800      
+          }      
+        },      
+        "color": {      
+          "value": ["#ff0000", "#0000ff"] // red and blue particles      
+        },      
+        "shape": {      
+          "type": "circle",      
+          "stroke": {      
+            "width": 0,      
+            "color": "#000000"      
+          },      
+          "polygon": {      
+            "nb_sides": 5      
+          }      
+        },      
+        "opacity": {      
+          "value": 0.5,      
+          "random": false,      
+          "anim": {      
+            "enable": false,      
+            "speed": 1,      
+            "opacity_min": 0.1,      
+            "sync": false      
+          }      
+        },      
+        "size": {      
+          "value": 3,      
+          "random": true,      
+          "anim": {      
+            "enable": false,      
+            "speed": 40,      
+            "size_min": 0.1,      
+            "sync": false      
+          }      
+        },      
+        "line_linked": {      
+          "enable": true,      
+          "distance": 150,      
+          "color": "#ffffff",      
+          "opacity": 0.4,      
+          "width": 1      
+        },      
+        "move": {      
+          "enable": true,      
+          "speed": 6,      
+          "direction": "none",      
+          "random": false,      
+          "straight": false,      
+          "out_mode": "out",      
+          "bounce": false,      
+          "attract": {      
+            "enable": false,      
+            "rotateX": 600,      
+            "rotateY": 1200      
+          }      
+        }      
+      },      
+      "interactivity": {      
+        "detect_on": "canvas",      
+        "events": {      
+          "onhover": {      
+            "enable": true,      
+            "mode": "repulse"      
+          },      
+          "onclick": {      
+            "enable": true,      
+            "mode": "push"      
+          },      
+          "resize": true      
+        },      
+        "modes": {      
+          "grab": {      
+            "distance": 400,      
+            "line_linked": {      
+              "opacity": 1      
+            }      
+          },      
+          "bubble": {      
+            "distance": 400,      
+            "size": 40,      
+            "duration": 2,      
+            "opacity": 8,      
+            "speed": 3      
+          },      
+          "repulse": {      
+            "distance": 200,      
+            "duration": 0.4      
+          },      
+          "push": {      
+            "particles_nb": 4      
+          },      
+          "remove": {      
+            "particles_nb": 2      
+          }      
+        }      
+      },      
+      "retina_detect": true      
+    });      
+  </script>    <!-- Main JavaScript code -->    <script>      
+    document.addEventListener('DOMContentLoaded', function () {      
+      const predictedCategoryElement = document.getElementById('predictedCategory');      
+      const predictedPremiumElement = document.getElementById('predictedPremium');      
+      const timerElement = document.getElementById('timeRemaining');      
+      const historyTableBody = document.querySelector('#predictionHistoryTable tbody');      
+      const prevPageButton = document.getElementById('prevPage');      
+      const nextPageButton = document.getElementById('nextPage');      
+      let predictionHistory = JSON.parse(localStorage.getItem('predictionHistory')) || [];      
+      let lastPrediction = JSON.parse(localStorage.getItem('lastPrediction'));      
+      let currentPrediction = JSON.parse(localStorage.getItem('currentPrediction'));      
+      let currentPage = 0;      
+      const itemsPerPage = 10;      
+      let timerInterval;    const fetchNoAverageEmerdList = () => {      
+    const requestData = {      
+      pageSize: 10,      
+      pageNo: 1,      
+      typeId: 1,      
+      language: 0,      
+      random: "ded40537a2ce416e96c00e5218f6859a",      
+      signature: "69306982EEEB19FA940D72EC93C62552",      
+      timestamp: Math.floor(Date.now() / 1000)      
+    };      return fetch('https://api.bdg88zf.com/api/webapi/GetNoaverageEmerdList', {      
+  method: 'POST',      
+  headers: {      
+    'Content-Type': 'application/json;charset=UTF-8',      
+    'Accept': 'application/json, text/plain, */*'      
+  },      
+  body: JSON.stringify(requestData)      
+})      
+  .then(response => response.json())      
+  .catch(error => console.error('Error fetching no average EMERD list data:', error));
 
-  <!-- Main Title -->
-  <header class="text-center py-6">
-    <h1 class="text-3xl font-bold text-blue-500 neon-text">MADE BY @Hackerking995</h1>
-  </header>
+};
 
-  <!-- First Container -->
-  <div class="max-w-md mx-auto bg-gray-800 rounded-lg shadow-lg border border-red-500 p-6 my-6">
-    <h2 class="text-xl font-bold text-red-500 text-center mb-4">AI ONLINE SERVER</h2>
-    
-    <!-- Period and Timer -->
-    <div class="border border-red-500 p-4 rounded-lg mb-4">
-      <p class="text-red-500 font-bold">AUTO PERIOD NUMBER</p>
-      <p id="period-number" class="text-white text-lg">Loading...</p>
-    </div>
+const fetchGameIssue = () => {
+const requestData = {
+typeId: 1,
+language: 0,
+random: "f8dcb5c527814db68800e3946a2b60e8",
+signature: "08CF7FF3339ED58D4743F4B650FCBEA9",
+timestamp: Math.floor(Date.now() / 1000)
+};
 
-    <div class="border border-red-500 p-4 rounded-lg mb-4">
-      <p class="text-red-500 font-bold">AUTO TIMER</p>
-      <p id="auto-timer" class="text-white text-lg">00:00</p>
-    </div>
+return fetch('https://api.bdg88zf.com/api/webapi/GetGameIssue', {      
+  method: 'POST',      
+  headers: {      
+    'Content-Type': 'application/json;charset=UTF-8',      
+    'Accept': 'application/json, text/plain, */*'      
+  },      
+  body: JSON.stringify(requestData)      
+})      
+  .then(response => response.json())      
+  .catch(error => console.error('Error fetching game issue:', error));
 
-    <!-- AI Server Results -->
-    <div class="border border-red-500 p-4 rounded-lg mb-4">
-      <p class="text-red-500 font-bold">AI SERVER RESULTS</p>
-      <p id="ai-results" class="text-white text-lg">Waiting...</p>
-    </div>
+};
 
-    <!-- Buttons -->
-    <div class="flex justify-between">
-      <button 
-        id="result-button" 
-        class="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-600 transition"
-        onclick="displayResult()">
-        RESULT
-      </button>
-      <button 
-        class="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-600 transition"
-        onclick="window.open('https://t.me/hackersdx/', '_blank')">
-        JOIN TG
-      </button>
-    </div>
-  </div>
+const categorizeNumber = (number) => {
+if (number >= 0 && number <= 4) return 'Small';
+if (number >= 5 && number <= 9) return 'Big';
+return 'Unknown';
+};
 
-  <!-- Second Container -->
-  <div class="max-w-lg mx-auto bg-gray-800 rounded-lg shadow-lg border border-red-500 p-6 my-6">
-    <h2 class="text-xl font-bold text-red-500 text-center mb-4">HISTORY OF RESULTS</h2>
-    <ul id="result-history" class="space-y-2">
-      <!-- History items will be added dynamically -->
-    </ul>
-  </div>
+const generateRandomPrediction = () => {
+const randomNumber = Math.floor(Math.random() * 10);
+const randomCategory = categorizeNumber(randomNumber);
+return { number: randomNumber, category: randomCategory };
+};
 
-  <script>
-    // Timer and Period Logic
-    let periodNumber = 1;
-    let timer = 60;
+const updateDataAndPrediction = () => {
+fetchNoAverageEmerdList()
+.then(data => {
+const list = data.data.list;
+const latestIssue = list[0].issueNumber;
+const latestActual = Number(list[0].number);
+const actualCategory = categorizeNumber(latestActual);
 
-    const updatePeriodAndTimer = () => {
-      document.getElementById('period-number').textContent = `Period: ${periodNumber}`;
-      const minutes = Math.floor(timer / 60);
-      const seconds = timer % 60;
-      document.getElementById('auto-timer').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+if (!lastPrediction || lastPrediction.issueNumber !== latestIssue) {      
+      if (lastPrediction) {      
+        const result = (lastPrediction.category === actualCategory) ? 'Win' : 'Loss';      
+        predictionHistory.unshift({      
+          issueNumber: latestIssue,      
+          predicted: lastPrediction.category,      
+          result: result      
+        });      
+        localStorage.setItem('predictionHistory', JSON.stringify(predictionHistory));      
+      }      
 
-      timer--;
-      if (timer < 0) {
-        timer = 60;
-        periodNumber++;
-      }
-    };
+      currentPrediction = generateRandomPrediction();      
+      currentPrediction.issueNumber = latestIssue;      
+      localStorage.setItem('currentPrediction', JSON.stringify(currentPrediction));      
+    }      
 
-    setInterval(updatePeriodAndTimer, 1000);
+    predictedCategoryElement.textContent = `Prediction: ${currentPrediction.category}`;      
+    predictedPremiumElement.textContent = `:`;      
 
-    // Simulate Result Display
-    const displayResult = () => {
-      document.getElementById('ai-results').textContent = 'Waiting...';
-      setTimeout(() => {
-        const result = Math.random() > 0.5 ? 'BIG' : 'SMALL';
-        document.getElementById('ai-results').textContent = result;
+    lastPrediction = {      
+      issueNumber: latestIssue,      
+      number: currentPrediction.number,      
+      category: currentPrediction.category      
+    };      
+    localStorage.setItem('lastPrediction', JSON.stringify(lastPrediction));      
 
-        // Add to history
-        const historyItem = document.createElement('li');
-        historyItem.textContent = `Period ${periodNumber - 1}: ${result}`;
-        historyItem.classList.add('text-lg', 'text-white', 'border-b', 'border-gray-700', 'pb-2');
-        document.getElementById('result-history').prepend(historyItem);
-      }, 1000);
-    };
-  </script>
+    updatePredictionHistoryTable();      
+  })      
+  .catch(error => console.error('Error updating prediction:', error));
 
-</body>
-</html>
+};
+
+const updatePredictionHistoryTable = () => {
+historyTableBody.innerHTML = '';
+const start = currentPage * itemsPerPage;
+const end = start + itemsPerPage;
+const paginatedHistory = predictionHistory.slice(start, end);
+
+paginatedHistory.forEach(entry => {      
+  const row = document.createElement('tr');      
+  row.innerHTML = `      
+      <td>${entry.issueNumber}</td>      
+      <td>${entry.predicted}</td>      
+      <td>${entry.result}</td>      
+    `;      
+  historyTableBody.appendChild(row);      
+});      
+
+prevPageButton.disabled = currentPage === 0;      
+nextPageButton.disabled = end >= predictionHistory.length;
+
+};
+
+const updateTimer = () => {
+fetchGameIssue()
+.then(data => {
+const { endTime } = data.data;
+const endDate = new Date(endTime);
+const now = new Date();
+const remainingTimeMs = endDate - now;
+
+if (remainingTimeMs <= 0) {      
+      timerElement.textContent = "Time Remaining: 00:00:00";      
+      clearInterval(timerInterval);      
+      updateDataAndPrediction();      
+      updateTimer();      
+    } else {      
+      const hours = String(Math.floor(remainingTimeMs / (1000 * 60 * 60))).padStart(2, '0');      
+      const minutes = String(Math.floor((remainingTimeMs % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');      
+      const seconds = String(Math.floor((remainingTimeMs % (1000 * 60)) / 1000)).padStart(2, '0');      
+      timerElement.textContent = `Time Remaining: ${hours}:${minutes}:${seconds}`;      
+    }      
+  })      
+  .catch(error => console.error('Error fetching game issue for timer:', error));
+
+};
+
+prevPageButton.addEventListener('click', () => {
+if (currentPage > 0) {
+currentPage--;
+updatePredictionHistoryTable();
+}
+});
+
+nextPageButton.addEventListener('click', () => {
+if ((currentPage + 1) * itemsPerPage < predictionHistory.length) {
+currentPage++;
+updatePredictionHistoryTable();
+}
+});
+
+updateDataAndPrediction();
+updateTimer();
+timerInterval = setInterval(() => {
+updateTimer();
+updateDataAndPrediction();
+}, 1000);
+updatePredictionHistoryTable();
+});
+
+</script>  </body>
+
+</html>  
